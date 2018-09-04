@@ -52,10 +52,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'tango_with_django_project.urls'
 
+
+SETTINGS_DIR = os.path.dirname(__file__)
+PROJECT_PATH = os.path.abspath(os.path.join(SETTINGS_DIR, os.pardir))
+TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        #'DIRS': [TEMPLATE_PATH],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,5 +121,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
+STATIC_ROOT = '/static/'
 STATIC_URL = '/static/'
+
+# Media file settings
+MEDIA_URL = '/media/'
+# Absolute path to media directory
+MEDIA_ROOT = os.path.join(os.path.abspath(BASE_DIR),
+                          'rango/media')
