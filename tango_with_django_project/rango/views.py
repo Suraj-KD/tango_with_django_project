@@ -9,4 +9,5 @@ def index(request):
 
 
 def about(request):
-    return HttpResponse("<center><p>This is  your About Page</p></center>")
+    context_dict = {'boldmessage': "This is About Page"}
+    return render(request, 'rango/about.html', context_dict)
