@@ -5,11 +5,30 @@
         <title>Rango</title>
     </head>
 
-    <body>
+    <body style="background-image:url({% static 'images/index.jpg' %})">
         <h1>Rango says...</h1>
         hello world! <strong>{{ boldmessage }}</strong><br />
+        {% if categories %}
+            <strong>Top Categories</strong>
+            <ul>
+                {% for category in categories %}
+                    <li><a href="/rango/category/{{ category.url }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+        {% if pages %}
+            <strong>Top Pages</strong>
+            <ul>
+                {% for page in pages %}
+                    <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no pages present</strong>
+        {% endif %}
         <a href="about">About</a><br />
-        <img src="{% static "images/index.jpg" %}" alt="My Image">
     </body>
 
 </html>
