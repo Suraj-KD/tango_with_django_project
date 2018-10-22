@@ -13,8 +13,9 @@
                     {% endfor %}
                 </ul>
             {% endif %}
+            <a href="{{ category_name_url }}/add_page">Add Page to this Category</a>
         {% else %}
-            <h1>The specified cateory {{ category_name }} does not exist!</h1>
+            <h1>The specified category {{ category_name }} does not exist!</h1>
         {% endif %}
     </body>
 </html>
