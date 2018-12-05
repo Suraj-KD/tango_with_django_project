@@ -1,4 +1,26 @@
 <!DOCTYPE html>
+{% extends 'rango/base.html' %}
+{% block title %}Add Page{% endblock %}
+{% block index_page_link %}
+    <a href="{% url 'index' %}">Return to Home</a>
+{% endblock %}
+{% block body_block %}
+    <div><center>
+    <form method=POST action="">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            <tr><td>{{ hidden }}</td></tr>
+        {% endfor %}
+        {% for field in form.visible_fields %}
+            <tr><td>{{ field.errors }}</td>
+                <td>{{ field.help_text }}</td>
+                <td>{{ field }}</td></tr>
+        {% endfor %}
+        <input type="submit" value="Submit" name="Submit">
+    </form>
+        </center></div>
+{% endblock %}
+<!--
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,3 +42,4 @@
     </form>
 </body>
 </html>
+-->

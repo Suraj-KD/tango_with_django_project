@@ -1,5 +1,15 @@
 <!DOCTYPE html>
+{% extends 'rango/base.html' %}
+
 {% load static %}
+{% block title %}About{% endblock %}
+{% block index_page_link %}
+    <a href="{% url 'index' %}">Return to Home</a>
+{% endblock %}
+{% block body_block %}
+    <img src="{% static "images/about.jpg"%}" alt="About Page" >
+{% endblock %}
+<!--
 <html>
     <title>About</title>
     <body>
@@ -7,3 +17,4 @@
          <img src="{% static "images/about.jpg"%}" alt="About Page" >
     </body>
 </html>
+-->

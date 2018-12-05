@@ -118,7 +118,7 @@ def register(request):
             # Update our variable to tell the template registration was successful
             registered = True
             # After successful registeration return to Home page
-            #return redirect('index')
+            return redirect('index')
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
         # They'll also be shown to the user.
