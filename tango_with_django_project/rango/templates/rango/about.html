@@ -7,6 +7,9 @@
     <a href="{% url 'index' %}">Return to Home</a>
 {% endblock %}
 {% block body_block %}
+    {% if visits > 0 %}
+        <strong>Number of times site visited is : {{ visits }}</strong>
+    {% endif %}
     <img src="{% static "images/about.jpg"%}" alt="About Page" >
 {% endblock %}
 <!--

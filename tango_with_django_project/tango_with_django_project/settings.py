@@ -25,7 +25,12 @@ SECRET_KEY = '&s4y3w=&s7gllvz=hv6p_v+k49effo)*m^hn%4_2y#i_o+3=2+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# Session variable
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_COOKIE_HTTPONLY = True
 
 
 # Application definition

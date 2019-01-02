@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -15,11 +16,74 @@ def index(request):
     context_dict.update({'categories': category_list, 'pages': page_list})
     for category in category_list:
         category.url = category.name.replace(' ', '_')
-    return render(request, 'rango/index.html', context_dict)
+    #return render(request, 'rango/index.html', context_dict)
+    #response = render(request, 'rango/index.html', context_dict)
+    # Get the number of visits to site
+    # we use COOKIES.get() function to obtain visits cookie
+    # If the cookie exists, the value returned is casted to an integer
+    # If the cookie doesn't exists, we default to zero and cast it.
+    #visits = int(request.COOKIES.get('visits', '0'))
 
+    # getting visits count using session
+    visits = request.session.get('visits')
+
+    # If visitor is visiting the site for 1st time, set visits count to 1
+    if not visits:
+        visits = 1
+
+    # Set this flag to False after every new session get started
+    reset_last_visit_time = False
+    
+    # get the last visit if it exists in cookie
+    last_visit = request.session.get('last_visit')
+    
+    if last_visit:
+        # Set the current time as last visit time to the site
+        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+        # Increse the no of visit by 1 to site if page is refreshed after 5 sec
+        if (datetime.now() - last_visit_time).seconds > 5:
+            visits += 1
+            reset_last_visit_time = True
+    else:
+        reset_last_visit_time = True
+
+    if reset_last_visit_time:
+        # update last_visit and visits value in cookie with latest value
+        request.session['last_visit'] = str(datetime.now())
+        request.session['visits'] = visits
+    
+    context_dict['visits'] = visits
+    return render(request, 'rango/index.html', context_dict)
+    '''
+    # Does the cookie last_visit exist?
+    if 'last_visit' in request.COOKIES:
+        # Yes it does! Get the cookie's value
+        last_visit = request.COOKIES['last_visit']
+        # Cast the value to Python DateTime object
+        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+        # If it has been more than one day since the last visit...
+        if (datetime.now() - last_visit_time).seconds > 5:
+            # ...reassign the value of the cookie to +1 of what it was before...
+            response.set_cookie('visits', visits+1)
+            # ...and update the last visit cookie, too.
+            response.set_cookie('last_visit', datetime.now())
+        else:
+            response.set_cookie('last_visit', datetime.now())
+    else:
+        # Cookie last_visit doesn't exists, so create it on to the current date/time
+        response.set_cookie('last_visit', datetime.now())
+
+    # Return the response back to the user, updating any cookies that need changed
+    return response
+    '''
 
 def about(request):
     context_dict = {'boldmessage': "This is About Page"}
+    if request.session.get('visits'):
+        count = request.session.get('visits')
+    else:
+        count = 0
+    context_dict['visits'] = count
     return render(request, 'rango/about.html', context_dict)
 
 
